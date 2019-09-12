@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+body {
+  background: linear-gradient(to right, #243b55, #141e30);
+  font-family: "nunito", sans-serif;
+  text-align: center;
+}
+.wrapper {
+  height: 100%;
+  width: 100%;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+}
+a {
+  font-size: 36px;
+  text-decoration: none;
+  color: white;
+}
+a:hover  {
+  color: white;
+  background-color: transparent;
+}
+#app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.add-btn {
+  display: flex;
+  justify-content: flex-start;
+  width: 80%;
+}
+.add-btn button {
+  width: 145px;
+  height: 50px;
+}
+h1 {
+  font-size: 36px;
+}
+table {
+  border-collapse: collapse;
+  width: 80%;
+  border-radius: 50px;
+  margin: 10px;
+  margin-top: 100px;
+
+  th {
+    font-size: 23px;
+    color: white;
+  }
+  
+  td,
+  th {
+    // border: 1px solid #afafaf;
+    border-bottom: 2px solid rgba(75, 168, 70, 0.6);
+    text-align: left;
+    padding: 8px;
+  }
+  td {
+    font-size: 15px;
+  }
+}
+.td-btn {
+  width: 80px;
+}
+
+
+button {
+  border-radius: 25px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+  width: 80px;
+  height: 40px;
+  background-color: #62c15d;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+
+// MODAL
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #ffffff;
+  box-shadow: 0px 0px 5px 0px;
+  border-radius: 5px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal-header {
+  color: black;
+  font-size: 30px;
+  flex-direction: column;
+}
+.modal-footer {
+  border-top: 1px solid #eeeeee;
+  justify-content: flex-end;
+}
+.modal-footer .btn-green, .btn-red {
+  width: 100px;
+  margin: 2px;
+}
+
+// .modal-body {
+//   position: relative;
+//   padding: 20px 10px;
+// }
+.modal-footer .btn-red {
+  color: white;
+  background: #dc3545;
+  width: 100px;
+}
+
+
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.modal-fade-enter, .modal-fade-leave-active {
+  opacity: 0;
+}
+.modal-fade-enter-active, .modal-fade-leave-active {
+  transition: opacity .5s ease;
+}
+
+label {
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+input {
+  border: none;
+  padding: 5px 0px;
+  font-size: 15px;
+  border-bottom: 2px solid rgba(98, 193, 93, 0.6);
+}

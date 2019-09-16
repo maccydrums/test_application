@@ -1,0 +1,43 @@
+// -----
+// Breakpoints
+// ---
+$breakTiny: 360px;
+$breakSmall: 480px;
+$breakMediumSmall: 720px;
+$breakMedium: 900px;
+$breakLarge: 1200px;
+$breakWide: 1400px;
+$breakUltraWide: 1680px;
+$breakMegaWide: 1900px;
+$breakHuge: 2100px;
+$breakMegaHuge: 2300px;
+// To enable support for browsers that do not support @media queries,
+// (IE <= 8, Firefox <= 3, Opera <= 9) set $mq-responsive to false
+// Create a separate stylesheet served exclusively to these browsers,
+// meaning @media queries will be rasterized, relying on the cascade itself
+$mq-responsive: true;
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+$mq-breakpoints: (
+  tiny:       $breakTiny,
+  small:      $breakSmall,
+  mediumSmall:$breakMediumSmall,
+  medium:     $breakMedium,
+  large:      $breakLarge,
+  wide:       $breakWide,
+  ultraWide:  $breakUltraWide,
+  megaWide:   $breakMegaWide,
+  huge:       $breakHuge,
+  megaHuge:   $breakMegaHuge,
+  // Tweakpoints
+  slickWide: 1320px
+);
+// Define the breakpoint from the $mq-breakpoints list that should
+// be used as the target width when outputting a static stylesheet
+// (i.e. when $mq-responsive is set to 'false').
+$mq-static-breakpoint: large;
+// If you want to display the currently active breakpoint in the top
+// right corner of your site during development, add the breakpoints
+// to this list, ordered by width, e.g. (mobile, tablet, desktop).
+//$mq-show-breakpoints: (tiny, small, mediumSmall, medium, large, wide, ultraWide, megaWide);

@@ -1,16 +1,13 @@
 <template>
   <div id="app">
     <h1>{{message}}</h1>
-    <div class="add-btn">
-      <button type="button" class="btn" @click="showModal">Add a new car!</button>
-      <modal v-show="isModalVisible" @close="closeModal" />
-    </div>
 
     <table>
       <tr>
-        <th>Car brands</th>
-        <th>Models</th>
+        <th>Car brand</th>
+        <th>Model</th>
         <th>Favorite</th>
+        <th></th>
         <th></th>
       </tr>
       <tr v-for="car in cars" :key="car.id">
@@ -18,10 +15,25 @@
         <td>{{ car.description}}</td>
         <td>{{ car.favorite }}</td>
         <td class="td-btn">
-          <button v-on:click="onDelete(car)">Delete</button>
+          <button type="button" class="btn" @click="getCar(car.id)">Edit</button>
+        </td>
+        <td class="td-btn">
+          <button class="btn-red" v-on:click="onDelete(car)" @click="closeModal">Delete</button>
         </td>
       </tr>
     </table>
+
+    <div class="add-btn">
+      <button type="button" class="btn" @click="showModal">Add a new car</button>
+      <modal
+        :onEdit="{onEdit}"
+        :sendCar="sendCar"
+        v-if="isModalVisible"
+        @close="closeModal"
+        @refreshList="refreshList($event)"
+        @updateOnPut="updateOnPut($event)"
+      />
+    </div>
   </div>
 </template>
 
@@ -33,25 +45,34 @@ export default {
     Modal
   },
   mounted() {
-    // const meta = document.querySelector('meta[name="csrf-token"]');
-    // console.log(meta.content);
-    //.getAttribute('content'))
-    this.testGet();
+    this.getList();
   },
-  data: function() {
+  data() {
     return {
       message: "Car application!",
-      cars: {},
-      isModalVisible: false
+      cars: [],
+      isModalVisible: false,
+      onEdit: {},
+      sendCar: null
     };
   },
   methods: {
-    testGet() {
+    updateOnPut(updateCar) {
+      const changedCar = this.cars.find(f => f.id === updateCar.id);
+
+      (changedCar.name = updateCar.name),
+        (changedCar.description = updateCar.description),
+        (changedCar.favorite = updateCar.favorite);
+      this.sendCar = null;
+    },
+    refreshList(newCar) {
+      this.cars.push(newCar);
+    },
+    getList() {
       const meta = document.querySelector('meta[name="csrf-token"]');
       const url = "/cars";
       Axios.get(url, {
         headers: {
-          // "X-Requested-With": "XMLHttpRequest",
           "X-CSRF-Token": meta.content,
           Accept: "application/json"
         }
@@ -59,27 +80,32 @@ export default {
         this.cars = response.data;
       });
     },
-    async onDelete(car) {
+    onDelete(car) {
       const meta = document.querySelector('meta[name="csrf-token"]');
-      try {
-        Axios.delete("/cars/" + car.id, {
-          method: "DELETE",
-          headers: {
-            "content-type": "application/json",
-            "X-CSRF-Token": meta.content,
-            "X-Requested-With": "XMLHttpRequest"
-          }
-        }).then(() => {
-          this.testGet();
+      Axios.delete("/cars/" + car.id, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          "X-CSRF-Token": meta.content,
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      })
+        .then(() => {
+          this.getList();
+        })
+        .catch(error => {
+          console.log(error);
         });
-      } catch (error) {
-        console.log(error);
-      }
     },
     closeModal() {
       this.isModalVisible = false;
+      this.sendCar = null;
     },
-    showModal() {
+    showModal(car) {
+      this.isModalVisible = true;
+    },
+    getCar(id) {
+      this.sendCar = this.cars.find(x => x.id == id);
       this.isModalVisible = true;
     }
   }

@@ -4,7 +4,7 @@
       <div class="modal">
         <div class="modal-header" :class="{error: validation.hasError('name')}">
           <slot name="header">
-            <label for="input1">Car brand</label>
+            <label for="input1">{{ t.table.titles.brand }}</label>
             <input
               id="input1"
               v-bind:class="{ 'is-invalid': validation.hasError('name')}"
@@ -14,7 +14,6 @@
               required
             />
             <div class="text-errors">{{ validation.firstError('name') }}</div>
-            {{validator.hasError()}}
             <!-- <div class="text-errors" v-if="errors.nameError">
               <p
                 class="text-danger"
@@ -26,7 +25,7 @@
         </div>
         <div class="modal-header" :class="{error: validation.hasError('description')}">
           <slot name="header">
-            <label for="input2">Model</label>
+            <label for="input2">{{ t.table.titles.model }}</label>
             <input
               id="input2"
               v-bind:class="{ 'is-invalid': validation.hasError('description')}"
@@ -46,15 +45,10 @@
           </slot>
         </div>
         <div class="modal-header">
-          <h3>Favorite</h3>
+          <h3>{{ t.table.titles.favorite }}</h3>
           <slot name="header">
             <div class="modal-header-checkbox">
-              <input
-                type="checkbox"
-                id="input3"
-                v-model="favorite"
-                required
-              />
+              <input type="checkbox" id="input3" v-model="favorite" required />
               <div class="test">
                 <label class="checkbox-label" for="input3"></label>
               </div>
@@ -63,9 +57,15 @@
         </div>
         <div class="modal-footer">
           <slot name="footer">
-            <button type="button" :disabled="this.name === '' || this.description === ''" v-if="!this.sendCar" class="btn-green" @click="addCar">Add car</button>
-            <button type="button" v-else class="btn-green" @click="editCar">Save car</button>
-            <button type="button" class="btn-red" @click="close">Close</button>
+            <button
+              type="button"
+              :disabled="this.name === '' || this.description === ''"
+              v-if="!this.sendCar"
+              class="btn-green"
+              @click="addCar"
+            >{{ t.buttons.add }}</button>
+            <button type="button" v-else class="btn-green" @click="editCar">{{ t.buttons.save }}</button>
+            <button type="button" class="btn-red" @click="close">{{ t.buttons.close }}</button>
           </slot>
         </div>
       </div>
@@ -95,15 +95,16 @@ export default {
       name: this.sendCar ? this.sendCar.name : "",
       description: this.sendCar ? this.sendCar.description : "",
       favorite: this.sendCar ? this.sendCar.favorite : false,
-      id: this.sendCar ? this.sendCar.id : ""
+      id: this.sendCar ? this.sendCar.id : "",
+      t: window.I18n
     };
   },
   validators: {
     name(value) {
-      return Validator
+      return Validator;
     },
     description(value) {
-      return Validator.value(value).required()
+      return Validator.value(value).required();
     }
   },
   methods: {

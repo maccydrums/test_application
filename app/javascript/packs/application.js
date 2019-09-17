@@ -7,7 +7,6 @@ import Vue from "vue/dist/vue.esm";
 import App from "../app.vue";
 import SimpleVueValidation from 'simple-vue-validator';
 
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()

@@ -29,21 +29,21 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  welcome: "Car brands!"
+sv:
+  welcome: "Bilmärken!"
   buttons: 
-      edit: "Edit"
-      delete: "Delete"
-      add: "Add car"
-      addNew: "Add a new car"
-      save: "Save"
-      close: "Close"
+    edit: "Ändra"
+    delete: "Ta bort"
+    add: "Lägg till"
+    addNew: "Lägg till en ny bil"
+    save: "Spara"
+    close: "Stäng"
   table:
     titles:
-      brand: "Car brand"
-      model: "Model"
-      favorite: "Favorite"
+      brand: "Bilmärke"
+      model: "Modell"
+      favorite: "Favorit"
   description:
-    brand: "Car brand"
-    model: "Model"
+    brand: "Bilmärke"
+    model: "Modell"
     

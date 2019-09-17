@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <h1>{{message}}</h1>
+    <h1>{{ t.welcome }}</h1>
 
     <table>
       <tr>
-        <th>Car brand</th>
-        <th>Model</th>
-        <th>Favorite</th>
+        <th>{{ t.table.titles.brand }}</th>
+        <th>{{ t.table.titles.model }}</th>
+        <th>{{ t.table.titles.favorite }}</th>
         <th></th>
         <th></th>
       </tr>
@@ -15,16 +15,16 @@
         <td>{{ car.description}}</td>
         <td>{{ car.favorite }}</td>
         <td class="td-btn">
-          <button type="button" class="btn" @click="getCar(car.id)">Edit</button>
+          <button type="button" class="btn" @click="getCar(car.id)">{{ t.buttons.edit }}</button>
         </td>
         <td class="td-btn">
-          <button class="btn-red" v-on:click="onDelete(car)" @click="closeModal">Delete</button>
+          <button class="btn-red" v-on:click="onDelete(car)" @click="closeModal">{{ t.buttons.delete }}</button>
         </td>
       </tr>
     </table>
 
     <div class="add-btn">
-      <button type="button" class="btn" @click="showModal">Add a new car</button>
+      <button type="button" class="btn" @click="showModal">{{ t.buttons.addNew }}</button>
       <modal
         :onEdit="{onEdit}"
         :sendCar="sendCar"
@@ -53,7 +53,8 @@ export default {
       cars: [],
       isModalVisible: false,
       onEdit: {},
-      sendCar: null
+      sendCar: null,
+      t: window.I18n
     };
   },
   methods: {

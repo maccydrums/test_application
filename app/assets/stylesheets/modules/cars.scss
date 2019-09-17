@@ -91,6 +91,7 @@ button {
 }
 
 
+
 // MODAL
 
 .modal-backdrop {
@@ -113,6 +114,7 @@ button {
   display: flex;
   flex-direction: column;
   width: 500px;
+  padding: 20px;
 }
 
 .modal-header,
@@ -191,6 +193,9 @@ button:focus {
   display: flex;
   justify-content: flex-start;
   align-self: flex-start;
+  font-size: 12px;
+  color: #d43f4e;
+  margin-top: 3px;
 }
 
 .text-danger {
@@ -207,7 +212,7 @@ button:focus {
 }
 
 
-// Checkbox button ------
+// Checkbox input
 
 *{
   transition: 400ms all ease-in-out 50ms;
@@ -224,16 +229,6 @@ input[type="checkbox"] {
   display: none;
 }
 
-a {
-  color: rgb(73, 73, 73);
-  text-decoration: none;
-  padding: 10px;
-  border-bottom: 2px solid rgba(43, 43, 43, 1);
-  &:hover {
-    background: rgba(43, 43, 43, 1);
-    color: rgba(255, 255, 255, 1);
-  }
-}
 
 input[type="checkbox"]:checked ~ .test {
   background: rgba(73, 168, 68, 1);
@@ -322,4 +317,8 @@ input[type="checkbox"]:checked ~ .test .checkbox-label {
   }
   td {
   }
+}
+
+.message {
+  color: red;    
 }

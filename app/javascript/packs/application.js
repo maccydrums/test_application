@@ -5,6 +5,8 @@
 import TurbolinksAdapter from "vue-turbolinks";
 import Vue from "vue/dist/vue.esm";
 import App from "../app.vue";
+import SimpleVueValidation from 'simple-vue-validator';
+
 
 require("@rails/ujs").start()
 require("turbolinks").start()
@@ -14,6 +16,7 @@ require("channels")
 Vue.use(TurbolinksAdapter);
 document.addEventListener("turbolinks:load", () => {
   Vue.use(TurbolinksAdapter);
+  Vue.use(SimpleVueValidation);
   if (document.getElementById("app")) {
     new Vue({
       render: h => h(App)

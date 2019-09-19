@@ -10,7 +10,7 @@
               v-bind:class="{ 'is-invalid': validation.hasError('name')}"
               v-model="name"
               type="text"
-              placeholder="Car brand"
+              :placeholder="t.description.brand"
               required
             />
             <div class="text-errors">{{ validation.firstError('name') }}</div>
@@ -31,7 +31,7 @@
               v-bind:class="{ 'is-invalid': validation.hasError('description')}"
               v-model="description"
               type="text"
-              placeholder="Model"
+              :placeholder="t.description.model"
               required
             />
             <div class="text-errors">{{ validation.firstError('description') }}</div>
@@ -64,7 +64,7 @@
               class="btn-green"
               @click="addCar"
             >{{ t.buttons.add }}</button>
-            <button type="button" v-else class="btn-green" @click="editCar">{{ t.buttons.save }}</button>
+            <button type="button" v-else class="btn-green" @click="editCar()">{{ t.buttons.save }}</button>
             <button type="button" class="btn-red" @click="close">{{ t.buttons.close }}</button>
           </slot>
         </div>
@@ -87,11 +87,11 @@ export default {
       //   favorite: this.sendCar ? this.sendCar.favorite : false,
       //   id: this.sendCar ? this.sendCar.id : ""
       // },
-      // errors: {
-      //   nameError: "",
-      //   descriptionError: "",
-      //   favoriteError: ""
-      // },
+      errors: {
+        nameError: "",
+        descriptionError: "",
+        favoriteError: ""
+      },
       name: this.sendCar ? this.sendCar.name : "",
       description: this.sendCar ? this.sendCar.description : "",
       favorite: this.sendCar ? this.sendCar.favorite : false,
@@ -140,29 +140,32 @@ export default {
           this.errors.favoriteError = err.response.data.favorite;
           console.log("Error", err.response.data);
         });
-    }
-  },
-  editCar() {
-    const meta = document.querySelector('meta[name="csrf-token"]');
-    Axios.put(
-      "/cars/" + this.id,
-      {
-        name: this.name,
-        description: this.description,
-        favorite: this.favorite
-      },
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-          "X-CSRF-Token": meta.content,
-          "X-Requested-With": "XMLHttpRequest"
+    },
+    editCar() {
+      const meta = document.querySelector('meta[name="csrf-token"]');
+      Axios.put(
+        "/cars/" + this.id,
+        {
+          name: this.name,
+          description: this.description,
+          favorite: this.favorite
+        },
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+            "X-CSRF-Token": meta.content,
+            "X-Requested-With": "XMLHttpRequest"
+          }
         }
-      }
-    ).then(res => {
-      this.close();
-      this.$emit("updateOnPut", res.data);
-    });
+      ).then(res => {
+        this.close();
+        this.$emit("updateOnPut", res.data);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
   }
 };
 </script>

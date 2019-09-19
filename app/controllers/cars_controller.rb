@@ -4,7 +4,8 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.all
+    @cars = Car.all.with_attached_avatar
+    @cars = @cars.map { |car| car.attributes.merge({ image_url: polymorphic_url(car.avatar) }).symbolize_keys}
   end
 
   # GET /cars/1
@@ -30,6 +31,11 @@ class CarsController < ApplicationController
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
         format.json { render :show, status: :created, location: @car }
+        @car = @car.attributes.merge({ 
+            image_url: polymorphic_url(@car.avatar)
+             }).symbolize_keys
+             ap 'creating a new car'
+             ap @car
       else
         ap 'HERE'
         ap @car.errors
@@ -46,6 +52,9 @@ class CarsController < ApplicationController
       if @car.update(car_params)
         format.html { redirect_to @car, notice: 'Car was successfully updated.' }
         format.json { render :show, status: :ok, location: @car }
+        @car = @car.attributes.merge({ 
+            image_url: polymorphic_url(@car.avatar)
+             }).symbolize_keys
       else
         format.html { render :edit }
         format.json { render json: @car.errors, status: :unprocessable_entity }
@@ -63,6 +72,12 @@ class CarsController < ApplicationController
     end
   end
 
+  def upload_image
+    @cars = Car.all
+    ap 'cars'
+    ap @cars
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
@@ -71,6 +86,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:name, :description, :favorite)
+      params.require(:car).permit(:name, :description, :favorite, :avatar)
     end
 end

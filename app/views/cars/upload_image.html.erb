@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <table class="upload" >
+    <tr>
+      <% @cars.each do |car| %>
+        <td><%=car.name%></td>
+        <td><%=car.description%></td>
+        <td><%=car.favorite%></td>
+        <td>
+          <% if car.avatar.attached?%>
+          <%= image_tag car.avatar%>
+          <% else %>
+          <img src="https://www.checkjevoeding.be/images/logo/no-image.png">
+        </td>
+        <% end %>
+        <td class="upload-img">
+          <%= form_for :car, method: :put, url: "/cars/#{car.id}" do |f| %>
+          <%= f.file_field :avatar, required: true %>
+          <%= f.button 'Upload image' %>
+        </td>
+        <% end %>
+    </tr>
+  <% end %>
+</table>
+
+
+
+</div>

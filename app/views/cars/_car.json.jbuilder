@@ -1,2 +1,1 @@
-json.extract! car, :id, :name, :description, :favorite, :created_at, :updated_at
-json.url car_url(car, format: :json)
+json.extract! car, :id, :name, :description, :favorite, :created_at, :updated_at, :image_url

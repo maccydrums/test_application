@@ -9,16 +9,27 @@
         <th>{{ t.table.titles.favorite }}</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
       <tr v-for="car in cars" :key="car.id">
         <td>{{ car.name }}</td>
         <td>{{ car.description}}</td>
         <td>{{ car.favorite }}</td>
+        <td>
+          <img :src="car.image_url" alt />
+        </td>
+        <td class="td-btn">
+          <button type="button" class="btn" @click="toUpload">Upload image</button>
+        </td>
         <td class="td-btn">
           <button type="button" class="btn" @click="getCar(car.id)">{{ t.buttons.edit }}</button>
         </td>
         <td class="td-btn">
-          <button class="btn-red" v-on:click="onDelete(car)" @click="closeModal">{{ t.buttons.delete }}</button>
+          <button
+            class="btn-red"
+            v-on:click="onDelete(car)"
+            @click="closeModal"
+          >{{ t.buttons.delete }}</button>
         </td>
       </tr>
     </table>
@@ -108,6 +119,10 @@ export default {
     getCar(id) {
       this.sendCar = this.cars.find(x => x.id == id);
       this.isModalVisible = true;
+    },
+    toUpload() {
+      // this.$route.push("/cars/upload_images");
+      window.location.href = "/cars/upload_image"
     }
   }
 };

@@ -10,9 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_js_translations
-    ap 'GET TRANS'
     @translations = I18n.t(".")
-    ap @translations
   end
 
   def set_locale

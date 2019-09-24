@@ -38,6 +38,7 @@ en:
       addNew: "Add a new car"
       save: "Save"
       close: "Close"
+      upload: "Upload image"
   table:
     titles:
       brand: "Car brand"

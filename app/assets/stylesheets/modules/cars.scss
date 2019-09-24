@@ -28,6 +28,7 @@ a:hover  {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   color: white;
 }
 .add-btn {
@@ -71,6 +72,10 @@ table {
   width: 80px;
 }
 
+.td-btn-to-upload button{
+  width: 140px;
+}
+
 table img {
   width: 50px;
   height: 50px;
@@ -95,7 +100,6 @@ button {
     cursor: inherit;
   }
 }
-
 
 
 // MODAL
@@ -387,4 +391,8 @@ input[type="checkbox"]:checked ~ .test .checkbox-label {
 
 .upload-img button {
   width: 140px;
+}
+
+#input3 {
+  border: none;
 }

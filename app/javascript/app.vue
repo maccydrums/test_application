@@ -10,6 +10,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
       <tr v-for="car in cars" :key="car.id">
         <td>{{ car.name }}</td>
@@ -18,8 +19,8 @@
         <td>
           <img :src="car.image_url" alt />
         </td>
-        <td class="td-btn">
-          <button type="button" class="btn" @click="toUpload">Upload image</button>
+        <td class="td-btn-to-upload">
+          <button type="button" class="btn" @click="toUpload">{{ t.buttons.upload }}</button>
         </td>
         <td class="td-btn">
           <button type="button" class="btn" @click="getCar(car.id)">{{ t.buttons.edit }}</button>
@@ -90,6 +91,7 @@ export default {
         }
       }).then(response => {
         this.cars = response.data;
+        console.log(this.cars)
       });
     },
     onDelete(car) {

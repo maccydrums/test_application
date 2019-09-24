@@ -38,6 +38,7 @@ sv:
     addNew: "Lägg till en ny bil"
     save: "Spara"
     close: "Stäng"
+    upload: "Ladda upp bild"
   table:
     titles:
       brand: "Bilmärke"

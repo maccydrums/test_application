@@ -45,6 +45,18 @@
           </slot>
         </div>
         <div class="modal-header">
+          <slot name="header">
+            <label for="input3">{{ t.buttons.upload }}</label>
+            <input
+              data-direct-upload-url="/rails/active_storage/direct_uploads"
+              direct_upload="true"
+              type="file"
+              ref="inputFile"
+              @change="uploadImage()"
+            />
+          </slot>
+        </div>
+        <div class="modal-header">
           <h3>{{ t.table.titles.favorite }}</h3>
           <slot name="header">
             <div class="modal-header-checkbox">
@@ -76,6 +88,8 @@
 <script>
 import Axios from "axios";
 import { Validator } from "simple-vue-validator";
+import { DirectUpload } from "@rails/activestorage";
+
 export default {
   props: ["onEdit", "sendCar"],
   name: "Modal",
@@ -96,7 +110,12 @@ export default {
       description: this.sendCar ? this.sendCar.description : "",
       favorite: this.sendCar ? this.sendCar.favorite : false,
       id: this.sendCar ? this.sendCar.id : "",
-      t: window.I18n
+      t: window.I18n,
+      uploadPicture: null,
+      blob_id: "",
+      filename: '',
+      size: '',
+      type: '',
     };
   },
   validators: {
@@ -108,6 +127,47 @@ export default {
     }
   },
   methods: {
+    uploadImage() {
+      this.uploadPicture = this.$refs.inputFile.files[0];
+      const input = document.querySelector("input[type=file]");
+
+      const url = input.dataset.directUploadUrl;
+      const upload = new DirectUpload(this.uploadPicture, url);
+
+      upload.create((error, blob) => {
+        if (error) {
+          console.log(error);
+        } else {
+          this.blob_id = blob.signed_id;
+          console.log("from blob variabel", this.blob_id);
+          console.log("this.uploaadpicture", this.uploadPicture);
+
+          // const meta = document.querySelector('meta[name="csrf-token"]');
+          // Axios.post(
+          //   "/rails/active_storage/disk/:encoded_token/" + this.blob_id,
+          //   {
+          //     filename: this.uploadPicture.name,
+          //     size: this.uploadPicture.size,
+          //     type: this.uploadPicture.type
+          //   },
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       "content-type": "application/json",
+          //       "X-CSRF-Token": meta.content,
+          //       "X-Requested-With": "XMLHttpRequest"
+          //     }
+          //   }
+          // )
+          //   .then(res => {
+          //     console.log(res.data);
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+        }
+      });
+    },
     close() {
       this.$emit("close");
     },
@@ -119,7 +179,8 @@ export default {
         {
           name: this.name,
           description: this.description,
-          favorite: this.favorite
+          favorite: this.favorite,
+          image_url: this.blob_id
         },
         {
           method: "POST",
@@ -133,12 +194,39 @@ export default {
         .then(res => {
           this.close();
           this.$emit("refreshList", res.data);
+          this.newId = res.data.id;
+          console.log("IMAGE NAME", this.uploadPicture);
+          console.log(res.data);
+          this.imagePut();
         })
         .catch(err => {
-          this.errors.nameError = err.response.data.name;
-          this.errors.descriptionError = err.response.data.description;
-          this.errors.favoriteError = err.response.data.favorite;
-          console.log("Error", err.response.data);
+          // this.errors.nameError = err.response.data.name;
+          // this.errors.descriptionError = err.response.data.description;
+          // this.errors.favoriteError = err.response.data.favorite;
+          // console.log("Error", err.response.data);
+        });
+
+      Axios.post(
+        "/rails/active_storage/disk/" + this.blob_id,
+        {
+          filename: this.uploadPicture.name,
+          size: this.uploadPicture.size,
+          type: this.uploadPicture.type
+        },
+        {
+          method: "POST",
+          headers: {
+            "content-type": "multipart/form-data",
+            "X-CSRF-Token": meta.content,
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        }
+      )
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
         });
     },
     editCar() {
@@ -148,7 +236,8 @@ export default {
         {
           name: this.name,
           description: this.description,
-          favorite: this.favorite
+          favorite: this.favorite,
+          image_url: this.uploadPicture
         },
         {
           method: "PUT",
@@ -158,13 +247,14 @@ export default {
             "X-Requested-With": "XMLHttpRequest"
           }
         }
-      ).then(res => {
-        this.close();
-        this.$emit("updateOnPut", res.data);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      )
+        .then(res => {
+          this.close();
+          this.$emit("updateOnPut", res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
